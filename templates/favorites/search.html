@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                {% if products|length == 0 %}
+                    <h3>{{ message }}</h3>
+                {% else %}
+                    <h3>Résultat pour : {{ query }}</h3>
+                    <hr>
+                    {% if products|length == 1 %}
+                        {% for product in products %}
+                            <p class="text-center">
+                                <a href="{% url 'detail' product_id=product.id %}">{{ product.generic }}</a>
+                            </p>
+                        {% endfor %}
+                        {% else %}
+                        <p>Veuillez sélectionnez un produit de la liste ci-dessous, afin de lui trouver des substituts
+                            avec un meilleur nutriscore.</p>
+                        {% for product in products %}
+                            <li class="text-left pagination">
+                                <a href="{% url 'results' product_id=product.id query=query %}">{{ product.generic}}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

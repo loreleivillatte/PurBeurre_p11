@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pur Beurre</title>
+    {% load static %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'favorites/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'favorites/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'favorites/img/logo_pur_beurre-favicon.png' %}">
+    <!-- Plugin CSS -->
+    <link href="{% static 'favorites/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'favorites/css/creative.min.css' %}" rel="stylesheet">
+    <!-- Personal stylesheet -->
+    <link href="{% static 'favorites/css/personal.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+    {% load static %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}">
+                <img src="{% static 'favorites/img/nav/logo.png' %}" width="40" class="" alt="logo">Pur Beurre
+            </a>
+            <form class="input-group-xs input-group-append" action={% url 'search' %} method="post">
+                {% csrf_token %}
+                <input class="form-control" type="search" name="research" placeholder="Produit...">
+                <input class=" loop btn btn-xs" type="image" src="{% static 'favorites/img/loop.svg' %}"
+                       width="40" alt="chercher">
+            </form>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="{% url 'profile' %}">
+                                <img src="{% static 'favorites/img/nav/compte.svg' %}" width="30" alt="Profil">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="{% url 'favorite' %}">
+                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" width="30" alt="Favoris">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">
+                                <img src="{% static 'favorites/img/nav/log.svg' %}" width="30" alt="Déconnexion">
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">
+                                <img src="{% static 'favorites/img/nav/compte.svg' %}" width="30" alt="compte">
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'index' %}#contact">
+                            <img src="{% static 'favorites/img/nav/contact.svg' %}" width="30" alt="contact">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+{% block content %}{% endblock %}
+
+<footer class="container-fluid">
+    <div class="row">
+        <a class="col-lg-8 mx-auto text-center fixed-bottom" href={% url 'legal' %}>[Mentions Légales]</a>
+    </div>
+</footer>
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'favorites/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'favorites/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'favorites/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'favorites/vendor/scrollreveal/scrollreveal.min.js' %}"></script>
+<script src="{% static 'favorites/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'favorites/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>

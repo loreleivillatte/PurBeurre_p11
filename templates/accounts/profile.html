@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% load static %}
+    <section class="masthead-c text-center d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-5 mx-auto text-center bg-3 pad-b">
+                    <img src="{% static 'favorites/img/nav/compte_log.svg' %}" width="100" alt="photo-profil">
+                    <br><br>
+                    <h2 class="text-white">{{ user.username }}</h2>
+
+                    <p class="text-white">Prénom : {{ user.first_name }}</p>
+                    <p class="text-white">Nom : {{ user.last_name }}</p>
+                    <p class="text-white">E-mail : {{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

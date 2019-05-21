@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <section class="masthead-c d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                 <div class="col-lg-6 mx-auto">
+                     <h5 class="text-center">Déjà abonné ?</h5>
+                     <hr class="bg-3">
+                     <form class="input-group-mb" method="post" action="{% url 'login' %}">
+                         {% csrf_token %}
+                         {{ form.as_p }}
+                         <input class="form-control  btn-b text-white" type="submit" value="Se connecter"/>
+                     </form>
+                     <a href="">Mot de passe oublié ?</a>
+                     <div class="pad">
+                         <h5 class="text-center">S'inscrire</h5>
+                         <hr class="bg-3">
+                         <button class="form-control btn-b">
+                             <a class="text-white" href="{% url 'registration' %}">Créer un compte</a>
+                         </button>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,196 @@
+
+.loop {
+    background-color: #DE9440;
+    border-radius: 0.25rem;
+    border: 1px solid #DE9440;
+}
+
+.nav-text {
+    color: #E8A75D;
+    font-size: 0.9rem;
+}
+
+/* background-color */
+
+.bg-1 {
+    background-color: #DE9440;
+}
+
+.bg-2 {
+    background-color: white;
+}
+
+.bg-3 {
+    background-color: #A9BBAD;
+}
+
+.bg-4 {
+    background-color: #E8A75D;
+}
+.bg-5 {
+    background-color: #C45525;
+}
+
+.masthead-c {
+    height: 100vh;
+    min-height: 650px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+/* padding */
+
+.pad {
+    padding-top: 50px;
+}
+
+.table-pad {
+    padding: 10px;
+}
+
+.pad-b {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-top: 10px solid #E8A75D;
+    border-bottom-right-radius: .40rem;
+    border-bottom-left-radius: .40rem;
+}
+
+.pad-c {
+    padding-top: 3rem;
+}
+
+.pad-d {
+    padding-bottom: 4rem;
+}
+
+.pad-section {
+    padding-top: 6rem;
+    padding-bottom: 1rem;
+}
+
+.pad-body {
+    padding-top: 2rem;
+}
+
+/* border */
+.rad {
+    border-radius: 50%;
+}
+
+.rad-b {
+    border-radius: 6px;
+}
+
+.bord {
+    border-left: solid 5px #C45525;
+    border-right: solid 5px #C45525;
+
+}
+
+.p-b {
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.div-b {
+    border: 4px solid white;
+}
+
+/*image*/
+
+
+.cover {
+    width: 200px;
+    object-fit: cover;
+}
+
+
+.ca{
+    width: 200px;
+    border-radius: 4px;
+}
+
+.btn-b {
+    background-color: #DE9440;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-b:hover {
+    background-color: #DE9440;
+    color: white;
+
+}
+
+.btn-b:active {
+    background-color: #DE9440;
+    color: white;
+}
+
+.page-link-b{
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #DE9440;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+
+.page-link-a{
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    border: 1px solid #DE9440;
+}
+
+.fixed-bottom-z {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1030;
+}
+
+/*form custom*/
+
+p > label {
+    display: inline-block;
+    margin-bottom: .1rem;
+    color: #565b5c;
+    text-align: left;
+}
+
+p > input {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.errorlist {
+    color: #fa3847;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul > li, .helptext {
+    padding-left: 0;
+    list-style: none;
+    font-size: small;
+}
+
+div > ul {
+    padding-left: 0;
+}
