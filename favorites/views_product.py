@@ -46,17 +46,8 @@ def results(request, product_id, query):
         Q(category__contains=category),).order_by('grade').exclude(pk=product_id)
     # built-in function ord() return an integer representing the Unicode code point of that character
     list_substitute = [product for product in listing if ord(product.grade) <= ord(product_selected.grade)]
-    page = request.GET.get('page', 1)
-    # make pagination, show 6 products per page
-    paginator = Paginator(list_substitute, 6)
-    try:
-        list_substitute = paginator.page(page)
-    except PageNotAnInteger:
-        list_substitute = paginator.page(1)
-    except EmptyPage:
-        list_substitute = paginator.page(paginator.num_pages)
 
-    context = {'product_selected': product_selected, 'list_substitute': list_substitute, 'paginate': True}
+    context = {'product_selected': product_selected, 'list_substitute': list_substitute}
     return render(request, 'favorites/results.html', context)
 
 

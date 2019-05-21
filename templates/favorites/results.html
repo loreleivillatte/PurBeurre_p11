@@ -42,31 +42,13 @@
                         {% if user.is_authenticated %}
                             {% csrf_token %}
                             <p><a class="badge badge-light" href="{% url 'save' product_id=product.id %}">
-                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="favoris">
+                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="Enregistrer">
                                 Ajouter aux favoris</a></p>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
         </div>
-        {% if list_substitute.has_other_pages %}
-            <hr>
-            <ul class="pagination justify-content-center">
-                {% if list_substitute.has_previous %}
-                    <li class="page-item"><a class="page-link-b" href="?page={{ list_substitute.previous_page_number }}">&laquo;</a></li>
-                {% endif %}
-                {% for i in list_substitute.paginator.page_range %}
-                    {% if list_substitute.number == i %}
-                        <li class="page-item active"><span class="page-link-a">{{ i }} </span><span class="sr-only">(current)</span></li>
-                    {%  else %}
-                        <li><a class="page-link-b" href="?page={{ i }}">{{ i }}</a></li>
-                    {%  endif %}
-                {% endfor %}
-                {% if list_substitute.has_next %}
-                    <li><a class="page-link-b" href="?page={{ list_substitute.next_page_number }}">&raquo;</a></li>
-                {% endif %}
-            </ul>
-        {% endif %}
     </section>
 
 {% endblock %}
