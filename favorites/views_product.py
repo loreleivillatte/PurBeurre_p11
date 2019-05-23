@@ -51,6 +51,7 @@ def results(request, product_id, query):
     return render(request, 'favorites/results.html', context)
 
 
+@login_required
 def create_board(request, product_id):
     """
     :param request:
@@ -71,6 +72,7 @@ def create_board(request, product_id):
     return render(request, 'favorites/save_product.html', locals())
 
 
+@login_required
 def save_product(request, product_id, board_id):
     """
     :param request:
@@ -120,11 +122,25 @@ def detail_product(request, product_id):
 
 
 @login_required
-def favorites_page(request):
+def board_page(request):
     """
     GET user ID
     :param request:
+    :return: the user's boards
+    """
+    list_boards = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'product__image', 'board_id')\
+        .distinct('board__name')
+    return render(request, 'favorites/boards_page.html', locals())
+
+
+@login_required
+def favorites_page(request, board_id):
+    """
+    GET user ID
+    :param request:
+    :param board_id:
     :return: the user's favorites list
     """
+    board_selected = Board.objects.filter(pk=board_id).values('name')
     list_favorite = Favorite.objects.filter(user_id=request.user.id).order_by('-id')
     return render(request, 'favorites/favorites_page.html', locals())
