@@ -41,7 +41,7 @@
                         <p>{{ product.generic }} <br><i class="text-black-50">Nutriscore : {{ product.grade }}</i></p>
                         {% if user.is_authenticated %}
                             {% csrf_token %}
-                            <p><a class="badge badge-light" href="{% url 'save' product_id=product.id %}">
+                            <p><a class="badge badge-light" href="{% url 'new_board' product_id=product.id %}">
                                 <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="Enregistrer">
                                 Ajouter aux favoris</a></p>
                         {% endif %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load static %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 ml-auto text-center mx-auto">
+                    <img class="cover rad-b" src="{{ product_selected.image }}" height="200" alt="product">
+                    <h5>{{ product_selected.generic }}</h5>
+                    <form class="input-group-mb" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="form-control  btn-b text-white" type="submit" value="Enregistrer"/>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+            {% if boards %}
+                <div class="row">
+                    <div class="col-lg-6 ml-auto text-center mx-auto">
+                        {% for board in boards %}
+                            <img class="cover rad-b" src="{{ board.product__image }}" height="200" alt="product">
+                            <p>{{ board.board_id }}</p>
+                            <p>{{ board.board__name }}</p>
+                            <p><a class="badge badge-light"
+                                  href="{% url 'save' product_id=product_selected.id board_id=board.board_id %}">
+                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="Enregistrer">
+                                Ajouter aux favoris</a></p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

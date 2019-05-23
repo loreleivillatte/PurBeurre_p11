@@ -3,9 +3,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Product, Favorite
+from .models import Product, Favorite, Board
+from .forms import BoardCreateForm
 from .utils import result_api, translate
 
 
@@ -51,6 +51,28 @@ def results(request, product_id, query):
     return render(request, 'favorites/results.html', context)
 
 
+def create_board(request, product_id):
+    product_selected = Product.objects.get(pk=product_id)
+    if request.method == 'POST':
+        form = BoardCreateForm(request.POST)
+        if form.is_valid():
+            board, created = Board.objects.get_or_create(name=form.cleaned_data.get('name'))
+            Favorite.objects.update_or_create(user_id=request.user.id, board_id=board.id, product_id=product_selected.id)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        form = BoardCreateForm()
+    boards = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'board_id', 'product__image') \
+        .distinct('board__name')
+    return render(request, 'favorites/save_product.html', locals())
+
+
+def save_product(request, product_id, board_id):
+    product_selected = product_id
+    board_selected = board_id
+    Favorite.objects.update_or_create(user_id=request.user.id, product_id=product_selected, board_id=board_selected)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'), locals())
+
+
 def detail_product(request, product_id):
     """
     This method retrieves the product information from the database
@@ -84,25 +106,6 @@ def detail_product(request, product_id):
                'salt': detail['nutriments']['salt_100g'], 'tr_fat': tr_fat, 'tr_sat': tr_sat, 'tr_sugar': tr_sugar,
                'tr_salt': tr_salt}
     return render(request, 'favorites/detail.html', context)
-
-
-@login_required
-def save_substitute(request, product_id):
-    """
-    This method is used to allow the user to register a product in his favorites list
-    make sure the user has not registered this product yet
-    :param request:
-    :param product_id: get ID of product
-    :return: HttpResponseRedirect(results.html)
-    """
-    product_selected = product_id
-    try:
-        Favorite.objects.get(user_id=request.user.id, product_id=product_selected)
-        messages.error(request, 'Ce produit fait déjà parti de vos favoris')
-    except ObjectDoesNotExist:
-        Favorite.objects.create(user_id=request.user.id, product_id=product_selected)
-        messages.success(request, 'Ce produit fait maintenant parti de vos favoris')
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

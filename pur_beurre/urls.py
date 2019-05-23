@@ -25,8 +25,9 @@ urlpatterns = [
     path('search/', views_product.search, name='search'),
     path('results/<int:product_id>/<query>', views_product.results, name='results'),
     path('detail/<int:product_id>/', views_product.detail_product, name='detail'),
-    path('save/<int:product_id>/', views_product.save_substitute, name='save'),
+    path('save/<int:product_id>/<int:board_id>', views_product.save_product, name='save'),
     path('favorite/', views_product.favorites_page, name='favorite'),
+    path('new-board/<int:product_id>/', views_product.create_board, name='new_board'),
 
     path('accounts/', include('accounts.urls')),
 ]
