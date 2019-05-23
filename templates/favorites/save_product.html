@@ -1,39 +1,54 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    {% load static %}
-    <section class="pb-0">
-        <div class="container">
+    <section class="d-flex">
+        <div class="container mt-2">
+        {% if favorite_saved %}
+            {% for f in favorite_saved %}
             <div class="row">
-                <div class="col-lg-6 ml-auto mx-auto">
-                    <h5 class="text-center">Créer tableau</h5>
-                    <hr>
-                    <form class="input-group-mb" method="post">{% csrf_token %}
-                        {{ form.as_p }}
-                        <input class="form-control  btn-b text-white" type="submit" value="Enregistrer"/>
+                <div class="col-lg-6 text-center mx-auto bg-1 rounded text-white p-1">
+                    Vous avez déjà enregistré ce produit dans : <b>{{ f.board__name|capfirst }}</b>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+            <div class="row mt-3">
+                <div class="col-lg-6 mx-auto mt-3">
+                    <h5 class="text-center">Créer un tableau</h5>
+                    <hr class="bg-3">
+                    <p>{{ form.non_field_errors }}</p>
+                    <form class="input-group mb-3" method="post">
+                        {% csrf_token %}
+                        <label for="{{ form.name.id_for_label }}"></label>
+                        <input type="text" name="name" class="form-control" placeholder="Nom"  id="id_name">
+                        <div class="input-group-append">
+                            <button class="form-control btn-b text-white in" type="submit">
+                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="favoris"></button>
+                        </div>
                     </form>
                 </div>
             </div>
-            {% if boards %}
-                <br><br>
-                <h5 class="text-center">Choisir tableau</h5>
-                <hr>
-                <br>
-                {% for board in boards %}
-                    <div class="row">
-                        <div class="bg-6 d-flex col-lg-6 mx-auto border rounded mb-2 px-0">
-                            <div class="py-1 align-self-center"><img class="cover-s rad-b" src="{{ board.product__image }}" height="30" alt="product"></div>
-                            <div class="py-1 pl-2 align-self-center">{{ board.board__name|capfirst }}</div>
-                            <div class="ml-auto py-1 align-self-center"><a
-                                  href="{% url 'save' product_id=product_selected.id board_id=board.board_id %}">
-                                <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="Enregistrer">
-                                </a>
+            <div class="mt-lg-4 row">
+                <div class="col-lg-6 mx-auto">
+                    <h5 class="text-center">Choisir un tableau</h5>
+                    <hr class="bg-3">
+                    {% for b in boards %}
+                        <a class="text-black-50" href="{% url 'save' product_id=product_id board_id=b.board_id %}">
+                            <div class="my-2 border rounded d-flex">
+                                <div class="pr-2">
+                                    <img class="cover-s rad-b" src="{{ b.product__image }}" height="38px" alt="product">
+                                </div>
+                                <div class="align-self-center px-2">{{ b.board__name|capfirst }}</div>
+                                <div class="ml-auto px-2 align-self-center">
+                                    <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="favoris">
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </section>
-
 {% endblock %}
+
 

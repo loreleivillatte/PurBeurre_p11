@@ -59,6 +59,8 @@ def create_board(request, product_id):
     :return:
     """
     product_selected = Product.objects.get(pk=product_id)
+    favorite_saved = Favorite.objects.filter(user_id=request.user.id, product_id=product_selected) \
+        .values('board__name')
     if request.method == 'POST':
         form = BoardCreateForm(request.POST)
         if form.is_valid():
@@ -128,7 +130,7 @@ def board_page(request):
     :param request:
     :return: the user's boards
     """
-    list_boards = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'product__image', 'board_id')\
+    list_board = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'product__image', 'board_id')\
         .distinct('board__name')
     return render(request, 'favorites/boards_page.html', locals())
 

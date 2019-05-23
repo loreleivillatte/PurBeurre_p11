@@ -3,23 +3,23 @@
 {% block content %}
 
     <section>
-        <div class="container mx-auto text-center">
-            <h3>Mes Tableaux</h3>
+        <div class="container mx-auto">
+            <h3 class="text-center">Mes Tableaux</h3>
             <hr>
-            {% if list_boards|length == 0 %}
-                <p>Aucun tableaux enregistrés</p>
+            {% if list_board %}
+                <div class="row mt-2">
+                    {% for board in list_board %}
+                        <div class="col-md-4 text-center mt-2">
+                            <a href="{% url 'favorites' board_id=board.board_id %}">
+                                <img class="cover rad-b" src="{{ board.product__image }}" height="200px" alt="product">
+                            </a>
+                            <p><b>{{ board.board__name|capfirst}}</b><br></p>
+                        </div>
+                    {% endfor %}
+                </div>
             {% else %}
-            <div class="row">
-                {% for board in list_boards %}
-                    <div class="col-md-4 my-3 text-center">
-                        <a class="my-1 bg-6" href="{% url 'favorites' board_id=board.board_id %}">
-                            <p class="my-0"><img class="cover rad-b" src="{{ board.product__image }}" height="200px" alt="product"></p>
-                            <p class="my-0"><i>{{ board.board__name|capfirst }}</i></p>
-                        </a>
-                    </div>
-                {% endfor %}
+                <p class="text-center">Aucun Tableaux enregistrés</p>
             {% endif %}
-            </div>
         </div>
     </section>
 
