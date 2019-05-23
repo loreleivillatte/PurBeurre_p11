@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from urllib.parse import urlparse
+from django.urls import resolve
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
@@ -46,8 +48,9 @@ def results(request, product_id, query):
         Q(category__contains=category),).order_by('grade').exclude(pk=product_id)
     # built-in function ord() return an integer representing the Unicode code point of that character
     list_substitute = [product for product in listing if ord(product.grade) <= ord(product_selected.grade)]
-
-    context = {'product_selected': product_selected, 'list_substitute': list_substitute}
+    context = {
+        'product_selected': product_selected, 'list_substitute': list_substitute
+    }
     return render(request, 'favorites/results.html', context)
 
 
@@ -61,16 +64,20 @@ def create_board(request, product_id):
     product_selected = Product.objects.get(pk=product_id)
     favorite_saved = Favorite.objects.filter(user_id=request.user.id, product_id=product_selected) \
         .values('board__name')
-    if request.method == 'POST':
+    boards = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'board_id', 'product__image') \
+        .distinct('board__name')
+    next_url = request.GET.get("next")
+    if favorite_saved:
+        return HttpResponseRedirect(next_url)
+    elif request.method == 'POST':
         form = BoardCreateForm(request.POST)
         if form.is_valid():
             board, created = Board.objects.get_or_create(name=form.cleaned_data.get('name'))
             Favorite.objects.update_or_create(user_id=request.user.id, board_id=board.id, product_id=product_selected.id)
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            messages.success(request, 'Ce produit fait maintenant parti de vos favoris !')
+            return HttpResponseRedirect(next_url)
     else:
         form = BoardCreateForm()
-    boards = Favorite.objects.filter(user_id=request.user.id).values('board__name', 'board_id', 'product__image') \
-        .distinct('board__name')
     return render(request, 'favorites/save_product.html', locals())
 
 
@@ -84,7 +91,9 @@ def save_product(request, product_id, board_id):
     """
     product_selected = product_id
     board_selected = board_id
-    Favorite.objects.update_or_create(user_id=request.user.id, product_id=product_selected, board_id=board_selected)
+    Favorite.objects.update_or_create(
+        user_id=request.user.id, product_id=product_selected, board_id=board_selected)
+    messages.success(request, 'Ce produit fait maintenant parti de vos favoris !')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), locals())
 
 
