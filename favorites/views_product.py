@@ -52,6 +52,11 @@ def results(request, product_id, query):
 
 
 def create_board(request, product_id):
+    """
+    :param request:
+    :param product_id: get product ID chosen by the user in the previous view(results)
+    :return:
+    """
     product_selected = Product.objects.get(pk=product_id)
     if request.method == 'POST':
         form = BoardCreateForm(request.POST)
@@ -67,6 +72,12 @@ def create_board(request, product_id):
 
 
 def save_product(request, product_id, board_id):
+    """
+    :param request:
+    :param product_id: product_selected
+    :param board_id: board_selected
+    :return:
+    """
     product_selected = product_id
     board_selected = board_id
     Favorite.objects.update_or_create(user_id=request.user.id, product_id=product_selected, board_id=board_selected)
@@ -94,7 +105,7 @@ def detail_product(request, product_id):
     dot_sat = 'favorites/img/nutrient/dot-' + nutrient_levels['saturated-fat'] + '.svg'
     dot_sugar = 'favorites/img/nutrient/dot-' + nutrient_levels['sugars'] + '.svg'
     dot_salt = 'favorites/img/nutrient/dot-' + nutrient_levels['salt'] + '.svg'
-    # use function translate()(utils.py)
+    # function translate()(utils.py)
     tr_fat = translate(nutrient_levels['fat'])
     tr_sat = translate(nutrient_levels['saturated-fat'])
     tr_sugar = translate(nutrient_levels['sugars'])

@@ -3,7 +3,7 @@ from favorites.models import Board, Favorite
 
 
 class BoardCreateForm(forms.Form):
-    name = forms.CharField()
+    name = forms.CharField(label='Nouveau tableau')
 
     class Meta:
         model = Board

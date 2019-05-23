@@ -31,6 +31,10 @@
     background-color: #C45525;
 }
 
+.bg-6 {
+    color: #565b5c !important;
+}
+
 .masthead-c {
     height: 100vh;
     min-height: 650px;
@@ -104,6 +108,11 @@
     object-fit: cover;
 }
 
+.cover-s {
+    width: 38px;
+    object-fit: cover;
+}
+
 
 .ca{
     width: 200px;
@@ -165,7 +174,7 @@ p > label {
     text-align: left;
 }
 
-p > input {
+p > input, #board > input {
     display: block;
     width: 100%;
     height: calc(2.25rem + 2px);

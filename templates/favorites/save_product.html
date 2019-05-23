@@ -1,35 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
     {% load static %}
-    <section>
+    <section class="pb-0">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 ml-auto text-center mx-auto">
-                    <img class="cover rad-b" src="{{ product_selected.image }}" height="200" alt="product">
-                    <h5>{{ product_selected.generic }}</h5>
-                    <form class="input-group-mb" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="form-control  btn-b text-white" type="submit" value="Enregistrer"/>
-                    </form>
+                <div class="col-lg-6 ml-auto mx-auto">
+                    <h5 class="text-center">Créer tableau</h5>
                     <hr>
+                    <form class="input-group-mb" method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="form-control  btn-b text-white" type="submit" value="Enregistrer"/>
+                    </form>
                 </div>
             </div>
             {% if boards %}
-                <div class="row">
-                    <div class="col-lg-6 ml-auto text-center mx-auto">
-                        {% for board in boards %}
-                            <img class="cover rad-b" src="{{ board.product__image }}" height="200" alt="product">
-                            <p>{{ board.board_id }}</p>
-                            <p>{{ board.board__name }}</p>
-                            <p><a class="badge badge-light"
+                <br><br>
+                <h5 class="text-center">Choisir tableau</h5>
+                <hr>
+                <br>
+                {% for board in boards %}
+                    <div class="row">
+                        <div class="bg-6 d-flex col-lg-6 mx-auto border rounded mb-2 px-0">
+                            <div class="py-1 align-self-center"><img class="cover-s rad-b" src="{{ board.product__image }}" height="30" alt="product"></div>
+                            <div class="py-1 pl-2 align-self-center">{{ board.board__name|capfirst }}</div>
+                            <div class="ml-auto py-1 align-self-center"><a
                                   href="{% url 'save' product_id=product_selected.id board_id=board.board_id %}">
                                 <img src="{% static 'favorites/img/nav/favoris.svg' %}" alt="Enregistrer">
-                                Ajouter aux favoris</a></p>
-                        {% endfor %}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             {% endif %}
         </div>
     </section>
+
 {% endblock %}
+
